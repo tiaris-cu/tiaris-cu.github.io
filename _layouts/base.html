@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+
+  {%- include head.html -%}
+
+  <body>
+
+  {%- include header.html -%}
+  {%- include banner.html -%}  
+  {%- include otros.html -%}   
+  {%- include partners.html -%}
+
+  <section class="simple-cta">
+    <div class="container">
+      <div class="row">
+        {%- if page.title -%}
+        <div class="col-lg-5">
+          <h4>{{ page.title }}</h4>
+        </div>
+        {%- endif -%}
+        <div class="col-lg-7">
+          {{ content }}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- include footer.html -%} 
+
+   
+
+  <!-- Scripts -->
+  <!-- Bootstrap core JavaScript -->
+    <script src="{{ "/vendor/jquery/jquery.min.js"  | relative_url }}" ></script>
+    <script src="{{ "/vendor/bootstrap/js/bootstrap.bundle.min.js"  | relative_url }}" ></script>
+
+    <script src="{{ "/assets/js/isotope.min.js"  | relative_url }}" ></script>
+    <script src="{{ "/assets/js/owl-carousel.js"  | relative_url }}" ></script>
+
+    <script src="{{ "/assets/js/tabs.js"  | relative_url }}" ></script>
+    <script src="{{ "/assets/js/swiper.js"  | relative_url }}" ></script>
+    <script src="{{ "/assets/js/custom.js"  | relative_url }}" ></script>
+    <script>
+        var interleaveOffset = 0.5;
+
+      var swiperOptions = {
+        loop: true,
+        speed: 1000,
+        grabCursor: true,
+        watchSlidesProgress: true,
+        mousewheelControl: true,
+        keyboardControl: true,
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev"
+        },
+        on: {
+          progress: function() {
+            var swiper = this;
+            for (var i = 0; i < swiper.slides.length; i++) {
+              var slideProgress = swiper.slides[i].progress;
+              var innerOffset = swiper.width * interleaveOffset;
+              var innerTranslate = slideProgress * innerOffset;
+              swiper.slides[i].querySelector(".slide-inner").style.transform =
+                "translate3d(" + innerTranslate + "px, 0, 0)";
+            }      
+          },
+          touchStart: function() {
+            var swiper = this;
+            for (var i = 0; i < swiper.slides.length; i++) {
+              swiper.slides[i].style.transition = "";
+            }
+          },
+          setTransition: function(speed) {
+            var swiper = this;
+            for (var i = 0; i < swiper.slides.length; i++) {
+              swiper.slides[i].style.transition = speed + "ms";
+              swiper.slides[i].querySelector(".slide-inner").style.transition =
+                speed + "ms";
+            }
+          }
+        }
+      };
+
+      var swiper = new Swiper(".swiper-container", swiperOptions);
+    </script>
+
+  </body>
+
+</html>

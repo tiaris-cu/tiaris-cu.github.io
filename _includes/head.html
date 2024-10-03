@@ -1,0 +1,44 @@
+<!--
+ Copyright 2024 cz9dev
+ 
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ 
+     https://www.apache.org/licenses/LICENSE-2.0
+ 
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    {%- if page.title -%}
+    <title>  {{ page.title }} </title>
+    {%- endif -%}
+
+    {%- seo -%}
+    <!-- Bootstrap core CSS -->
+    <link href="{{ "/vendor/bootstrap/css/bootstrap.min.css"  | relative_url }}" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="{{ "/assets/css/fontawesome.css" | relative_url }}">
+    <link rel="stylesheet" href="{{ "/assets/css/templatemo-574-mexant.css" | relative_url }}">
+    <link rel="stylesheet" href="{{ "/assets/css/owl.css" | relative_url }}">
+    <link rel="stylesheet" href="{{ "/assets/css/animate.css" | relative_url }}">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css">
+
+    {%- feed_meta -%}
+    {%- if jekyll.environment == 'production' and site.google_analytics -%}
+    {%- include google-analytics.html -%}
+    {%- endif -%}
+  </head>

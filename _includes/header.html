@@ -1,0 +1,62 @@
+<!--
+ Copyright 2024 cz9dev
+ 
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ 
+     https://www.apache.org/licenses/LICENSE-2.0
+ 
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<!-- ***** Header Area Start ***** -->
+<header class="header-area header-sticky">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- ***** Logo Start ***** -->
+                    <a href="index.html" class="logo">
+                        <img src="{{ "assets/images/logo.png"  | relative_url }}" alt="">
+                    </a>
+                    <!-- ***** Logo End ***** -->
+                    <!-- ***** Menu Start ***** -->
+
+                    {%- assign default_paths = site.pages | map: "path" -%}
+                    {%- assign page_paths = site.header_pages | default: default_paths -%}
+                    {%- assign titles_size = site.pages | map: 'title' | join: '' | size -%}
+
+                    <ul class="nav">
+                        <li class="scroll-to-section"><a href="/" class="active">Home</a></li>
+                        <li class="scroll-to-section"><a href="/#services">Services</a></li>                        
+                        {%- if titles_size > 0 -%}
+                        <li class="has-sub">
+                            <a href="javascript:void(0)">Pages</a>
+                            <ul class="sub-menu">
+                                {%- for path in page_paths -%}
+                                {%- assign my_page = site.pages | where: "path", path | first -%}
+                                {%- if my_page.title -%}
+                                    <li><a href="{{ my_page.url | relative_url }}">{{ my_page.title | escape }}</a></li>
+                                {%- endif -%}
+                                {%- endfor -%}                                
+                            </ul>
+                        </li>
+                        {%- endif -%}
+                        <li class="scroll-to-section"><a href="/#testimonials">Testimonials</a></li>
+                        <li><a href="contact-us.html">Contact Support</a></li> 
+                    </ul>        
+                    <a class='menu-trigger'>
+                        <span>Menu</span>
+                    </a>
+                    <!-- ***** Menu End ***** -->
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- ***** Header Area End ***** -->
