@@ -50,3 +50,7 @@ plugins:
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
+
+# Cosas que estoy poniendo yo cz9dev
+# To use Disqus comments, sign up to https://disqus.com and fill in your Disqus shortname (NOT the userid)
+disqus: "https-cz9dev-github-io"
