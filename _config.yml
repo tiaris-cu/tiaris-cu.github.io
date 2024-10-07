@@ -22,7 +22,7 @@ title: Tiaris
 email: czaldivarp@nauta.cu
 description: Sitio web del proyecto Tiaris
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+url: "/" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: cz9dev
 github_username:  cz9dev
 
