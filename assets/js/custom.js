@@ -177,44 +177,78 @@
 	});
 
 	$(document).ready(function () {
-	    $(document).on("scroll", onScroll);
-	    
-	    //smoothscroll
-	    $('.scroll-to-section a[href^="#"]').on('click', function (e) {
-	        e.preventDefault();
-	        $(document).off("scroll");
-	        
-	        $('.scroll-to-section a').each(function () {
-	            $(this).removeClass('active');
-	        })
-	        $(this).addClass('active');
-	      
-	        var target = this.hash,
-	        menu = target;
-	       	var target = $(this.hash);
-	        $('html, body').stop().animate({
-	            scrollTop: (target.offset().top) - 79
-	        }, 500, 'swing', function () {
-	            window.location.hash = target;
-	            $(document).on("scroll", onScroll);
-	        });
-	    });
-	});
+    $(document).on("scroll", onScroll);
+    
+    //smoothscroll para todos los enlaces internos
+    $('.scroll-to-section a[href^="#"], .nav a[href^="#"]').on('click', function (e) {
+        // Ignorar enlaces vacíos o que no sean internos
+        if (this.hash === "#" || this.hash === "") return;
+        
+        e.preventDefault();
+        $(document).off("scroll");
+        
+        $('.scroll-to-section a, .nav a[href^="#"]').each(function () {
+            $(this).removeClass('active');
+        });
+        $(this).addClass('active');
+        
+        var target = this.hash;
+        var targetElement = $(target);
+        
+        if (targetElement.length) {
+            $('html, body').stop().animate({
+                scrollTop: (targetElement.offset().top) - 79
+            }, 500, 'swing', function () {
+                window.location.hash = target;
+                $(document).on("scroll", onScroll);
+            });
+        }
+    });
+    
+    // Ejecutar onScroll una vez al cargar para establecer el estado inicial
+    setTimeout(function() {
+        onScroll();
+    }, 100);
+});
 
 	function onScroll(event){
-	    var scrollPos = $(document).scrollTop();
-	    $('.nav a').each(function () {
-	        var currLink = $(this);
-	        var refElement = $(currLink.attr("href"));
-	        if (refElement.position().top <= scrollPos && refElement.position().top + refElement.height() > scrollPos) {
-	            $('.nav ul li a').removeClass("active");
-	            currLink.addClass("active");
-	        }
-	        else{
-	            currLink.removeClass("active");
-	        }
-	    });
-	}
+    var scrollPos = $(document).scrollTop() + 100; // Offset de 100px para el header
+    
+    // Selecciona los enlaces del menú que apuntan a secciones internas
+    $('.nav .scroll-to-section a, .nav a[href^="#"]').each(function () {
+        var currLink = $(this);
+        var hash = currLink.attr("href");
+        
+        // Ignorar enlaces que no apuntan a una sección (ej: javascript:void(0))
+        if (hash === "#" || hash === "" || hash.indexOf("#") === -1) return;
+        
+        var targetId = hash.split('#')[1];
+        var refElement;
+        
+        // Manejar el caso especial de "Home" (sin hash o solo "/")
+        if (!targetId || targetId === "") {
+            // Home se activa cuando el scroll está en la parte superior
+            if (scrollPos < 200) {
+                $('.nav .scroll-to-section a').removeClass("active");
+                currLink.addClass("active");
+            }
+            return;
+        }
+        
+        refElement = $("#" + targetId);
+        
+        if (refElement.length && refElement.position()) {
+            var elementTop = refElement.offset().top;
+            var elementBottom = elementTop + refElement.outerHeight();
+            
+            // Verificar si la sección está visible en la ventana
+            if (scrollPos >= elementTop - 100 && scrollPos < elementBottom - 100) {
+                $('.nav .scroll-to-section a, .nav a[href^="#"]').removeClass("active");
+                currLink.addClass("active");
+            }
+        }
+    });
+}
 
 
 	// Page loading animation

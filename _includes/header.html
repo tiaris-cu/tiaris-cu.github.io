@@ -21,8 +21,8 @@
             <div class="col-12">
                 <nav class="main-nav">
                     <!-- ***** Logo Start ***** -->
-                    <a href="index.html" class="logo">
-                        <img src="{{ "/assets/images/logo.png"  | relative_url }}" alt="">
+                    <a href="{{ '/' | relative_url }}" class="logo">
+                        <img src="{{ '/assets/images/logo.png' | relative_url }}" alt="Tiaris logo">
                     </a>
                     <!-- ***** Logo End ***** -->
                     <!-- ***** Menu Start ***** -->
@@ -32,9 +32,12 @@
                     {%- assign titles_size = site.pages | map: 'title' | join: '' | size -%}
 
                     <ul class="nav">
-                        <li class="scroll-to-section"><a href="/" class="active">Home</a></li>
-                        <li class="scroll-to-section"><a href="/#services">Services</a></li>                        
-                        <li class="scroll-to-section"><a href="/#about">About us</a></li> 
+                        <li class="scroll-to-section"><a href="{{ '/' | relative_url }}" data-target="home" class="active">Home</a></li>
+                        <li class="scroll-to-section"><a href="{{ '#services' | relative_url }}" data-target="services">Services</a></li>
+                        <li class="scroll-to-section"><a href="{{ '#about' | relative_url }}" data-target="about">About us</a></li>
+                        <li class="scroll-to-section"><a href="{{ '#contact' | relative_url }}" data-target="contact">Contact Support</a></li>
+                        <li class="scroll-to-section"><a href="{{ '#testimonials' | relative_url }}"
+                                data-target="testimonials">Testimonials</a></li>
                         {%- if titles_size > 0 -%}
                         <li class="has-sub">
                             <a href="javascript:void(0)">Pages</a>
@@ -42,17 +45,13 @@
                                 {%- for path in page_paths -%}
                                 {%- assign my_page = site.pages | where: "path", path | first -%}
                                 {%- if my_page.title -%}
-                                    <li><a href="{{ my_page.url | relative_url }}">{{ my_page.title | escape }}</a></li>
+                                <li><a href="{{ my_page.url | relative_url }}">{{ my_page.title | escape }}</a></li>
                                 {%- endif -%}
-                                {%- endfor -%}                                
+                                {%- endfor -%}
                             </ul>
                         </li>
                         {%- endif -%}
-                        <li class="scroll-to-section"><a href="/#testimonials">Testimonials</a></li>
-                        <!--
-                        <li><a href="contact">Contact Support</a></li>
-                        -->
-                    </ul>        
+                    </ul>
                     <a class='menu-trigger'>
                         <span>Menu</span>
                     </a>
