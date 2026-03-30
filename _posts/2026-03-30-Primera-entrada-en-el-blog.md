@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Primera entrada en el blog!"
-date: 2024-10-08
+date: 2026-03-30
 author: "Tiaris Team"
 categories: [Novedades, General]
 tags: [bienvenida, proyecto]
@@ -30,7 +30,7 @@ En las próximas semanas estaremos publicando:
 3. **Novedades** sobre nuevas tecnologías
 4. **Casos de éxito** de nuestros clientes
 
-Si tienen alguna pregunta o sugerencia sobre temas que les gustaría ver, no duden en [contactarnos](/contact/).
+Si tienen alguna pregunta o sugerencia sobre temas que les gustaría ver, no duden en [contactarnos](/#contact).
 
 ¡Gracias por leernos!
 
