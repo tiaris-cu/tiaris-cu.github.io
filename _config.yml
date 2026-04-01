@@ -20,11 +20,20 @@
 
 title: Tiaris
 email: czaldivarp@nauta.cu
-description: Sitio web del proyecto Tiaris
+# Mejoras SEO
+description: >-
+  Tiaris ofrece servicios profesionales de desarrollo web, instalación de sistemas,
+  mantenimiento de equipos, montaje de redes, sistemas CCTV y desarrollo de aplicaciones móviles.
+  Soluciones informáticas a medida en Cuba y el mundo.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: cz9dev
 github_username:  cz9dev
+
+# Navegación principal
+header_pages:
+  - index.markdown  
+  - blog.md
 
 # Build settings
 theme: minima
