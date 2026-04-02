@@ -346,5 +346,122 @@
         }
     })
 
+    // ==========================================
+    // FORMULARIO DE CONTACTO CON AJAX
+    // ==========================================
+    // Esta funcionalidad maneja el envío del formulario sin redirección
+    // y muestra mensajes de éxito/error en la misma página
+    
+    $(document).ready(function() {
+        // Verificar que el formulario existe en la página
+        if ($('#contactForm').length) {
+            $('#contactForm').on('submit', function(e) {
+                e.preventDefault(); // Evita que el formulario redirija a FormKeep
+                
+                var form = $(this);
+                var submitButton = $('#form-submit');
+                var formMessage = $('#form-message');
+                
+                // Si no existe el contenedor de mensajes, lo creamos
+                if (formMessage.length === 0) {
+                    form.append('<div id="form-message" style="display: none; margin-top: 20px; padding: 15px; border-radius: 8px; text-align: center;"></div>');
+                    formMessage = $('#form-message');
+                }
+                
+                var formData = form.serialize(); // Serializa los datos del formulario
+                
+                // Validación básica
+                var nombre = $('#name').val();
+                var email = $('#email').val();
+                var servicio = $('#chooseOption').val();
+                
+                if (!nombre || !email || !servicio) {
+                    formMessage
+                        .removeClass('success-message')
+                        .addClass('error-message')
+                        .html('<i class="fas fa-exclamation-triangle"></i> Por favor, complete todos los campos obligatorios.')
+                        .fadeIn();
+                    
+                    setTimeout(function() {
+                        formMessage.fadeOut();
+                    }, 4000);
+                    return;
+                }
+                
+                // Validar formato de email
+                var emailRegex = /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    formMessage
+                        .removeClass('success-message')
+                        .addClass('error-message')
+                        .html('<i class="fas fa-exclamation-triangle"></i> Por favor, ingrese un correo electrónico válido.')
+                        .fadeIn();
+                    
+                    setTimeout(function() {
+                        formMessage.fadeOut();
+                    }, 4000);
+                    return;
+                }
+                
+                // Mostrar estado de carga
+                var originalButtonText = submitButton.html();
+                submitButton.html('<i class="fas fa-spinner fa-spin"></i> Enviando...');
+                submitButton.prop('disabled', true);
+                formMessage.hide();
+                
+                // Enviar datos a FormKeep vía AJAX
+                $.ajax({
+                    url: form.attr('action'),
+                    type: 'POST',
+                    data: formData,
+                    dataType: 'json',
+                    success: function(data) {
+                        // Éxito: mostrar mensaje de agradecimiento
+                        formMessage
+                            .removeClass('error-message')
+                            .addClass('success-message')
+                            .html('<i class="fas fa-check-circle"></i> ¡Gracias por contactarnos! Nos pondremos en contacto contigo pronto.')
+                            .fadeIn();
+                        
+                        // Limpiar el formulario
+                        form[0].reset();
+                        
+                        // Restaurar botón
+                        submitButton.html(originalButtonText);
+                        submitButton.prop('disabled', false);
+                        
+                        // Ocultar mensaje después de 5 segundos
+                        setTimeout(function() {
+                            formMessage.fadeOut();
+                        }, 5000);
+                    },
+                    error: function(xhr, status, error) {
+                        // Error: mostrar mensaje de error
+                        var errorMsg = 'Hubo un problema al enviar el mensaje. Por favor, inténtalo de nuevo.';
+                        
+                        // Si FormKeep devuelve un mensaje de error específico
+                        if (xhr.responseJSON && xhr.responseJSON.message) {
+                            errorMsg = xhr.responseJSON.message;
+                        }
+                        
+                        formMessage
+                            .removeClass('success-message')
+                            .addClass('error-message')
+                            .html('<i class="fas fa-exclamation-triangle"></i> ' + errorMsg)
+                            .fadeIn();
+                        
+                        // Restaurar botón
+                        submitButton.html(originalButtonText);
+                        submitButton.prop('disabled', false);
+                        
+                        // Ocultar mensaje después de 5 segundos
+                        setTimeout(function() {
+                            formMessage.fadeOut();
+                        }, 5000);
+                    }
+                });
+            });
+        }
+    });
 
 })(window.jQuery);
