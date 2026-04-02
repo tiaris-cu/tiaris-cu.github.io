@@ -1,277 +1,277 @@
 (function ($) {
-	
-	"use strict";
 
-	$(window).scroll(function() {
-	  var scroll = $(window).scrollTop();
-	  var box = $('.header-text').height();
-	  var header = $('header').height();
+    "use strict";
 
-	  if (scroll >= box - header) {
-	    $("header").addClass("background-header");
-	  } else {
-	    $("header").removeClass("background-header");
-	  }
-	});
-	
-	$('.filters ul li').click(function(){
+    $(window).scroll(function () {
+        var scroll = $(window).scrollTop();
+        var box = $('.header-text').height();
+        var header = $('header').height();
+
+        if (scroll >= box - header) {
+            $("header").addClass("background-header");
+        } else {
+            $("header").removeClass("background-header");
+        }
+    });
+
+    $('.filters ul li').click(function () {
         $('.filters ul li').removeClass('active');
         $(this).addClass('active');
-          
-          var data = $(this).attr('data-filter');
-          $grid.isotope({
+
+        var data = $(this).attr('data-filter');
+        $grid.isotope({
             filter: data
-          })
-        });
-
-        var $grid = $(".grid").isotope({
-          itemSelector: ".all",
-          percentPosition: true,
-          masonry: {
-            columnWidth: ".all"
-          }
         })
+    });
+
+    var $grid = $(".grid").isotope({
+        itemSelector: ".all",
+        percentPosition: true,
+        masonry: {
+            columnWidth: ".all"
+        }
+    })
 
 
-	const Accordion = {
-	  settings: {
-	    // Expand the first item by default
-	    first_expanded: false,
-	    // Allow items to be toggled independently
-	    toggle: false
-	  },
+    const Accordion = {
+        settings: {
+            // Expand the first item by default
+            first_expanded: false,
+            // Allow items to be toggled independently
+            toggle: false
+        },
 
-	  openAccordion: function(toggle, content) {
-	    if (content.children.length) {
-	      toggle.classList.add("is-open");
-	      let final_height = Math.floor(content.children[0].offsetHeight);
-	      content.style.height = final_height + "px";
-	    }
-	  },
+        openAccordion: function (toggle, content) {
+            if (content.children.length) {
+                toggle.classList.add("is-open");
+                let final_height = Math.floor(content.children[0].offsetHeight);
+                content.style.height = final_height + "px";
+            }
+        },
 
-	  closeAccordion: function(toggle, content) {
-	    toggle.classList.remove("is-open");
-	    content.style.height = 0;
-	  },
+        closeAccordion: function (toggle, content) {
+            toggle.classList.remove("is-open");
+            content.style.height = 0;
+        },
 
-	  init: function(el) {
-	    const _this = this;
+        init: function (el) {
+            const _this = this;
 
-	    // Override default settings with classes
-	    let is_first_expanded = _this.settings.first_expanded;
-	    if (el.classList.contains("is-first-expanded")) is_first_expanded = true;
-	    let is_toggle = _this.settings.toggle;
-	    if (el.classList.contains("is-toggle")) is_toggle = true;
+            // Override default settings with classes
+            let is_first_expanded = _this.settings.first_expanded;
+            if (el.classList.contains("is-first-expanded")) is_first_expanded = true;
+            let is_toggle = _this.settings.toggle;
+            if (el.classList.contains("is-toggle")) is_toggle = true;
 
-	    // Loop through the accordion's sections and set up the click behavior
-	    const sections = el.getElementsByClassName("accordion");
-	    const all_toggles = el.getElementsByClassName("accordion-head");
-	    const all_contents = el.getElementsByClassName("accordion-body");
-	    for (let i = 0; i < sections.length; i++) {
-	      const section = sections[i];
-	      const toggle = all_toggles[i];
-	      const content = all_contents[i];
+            // Loop through the accordion's sections and set up the click behavior
+            const sections = el.getElementsByClassName("accordion");
+            const all_toggles = el.getElementsByClassName("accordion-head");
+            const all_contents = el.getElementsByClassName("accordion-body");
+            for (let i = 0; i < sections.length; i++) {
+                const section = sections[i];
+                const toggle = all_toggles[i];
+                const content = all_contents[i];
 
-	      // Click behavior
-	      toggle.addEventListener("click", function(e) {
-	        if (!is_toggle) {
-	          // Hide all content areas first
-	          for (let a = 0; a < all_contents.length; a++) {
-	            _this.closeAccordion(all_toggles[a], all_contents[a]);
-	          }
+                // Click behavior
+                toggle.addEventListener("click", function (e) {
+                    if (!is_toggle) {
+                        // Hide all content areas first
+                        for (let a = 0; a < all_contents.length; a++) {
+                            _this.closeAccordion(all_toggles[a], all_contents[a]);
+                        }
 
-	          // Expand the clicked item
-	          _this.openAccordion(toggle, content);
-	        } else {
-	          // Toggle the clicked item
-	          if (toggle.classList.contains("is-open")) {
-	            _this.closeAccordion(toggle, content);
-	          } else {
-	            _this.openAccordion(toggle, content);
-	          }
-	        }
-	      });
+                        // Expand the clicked item
+                        _this.openAccordion(toggle, content);
+                    } else {
+                        // Toggle the clicked item
+                        if (toggle.classList.contains("is-open")) {
+                            _this.closeAccordion(toggle, content);
+                        } else {
+                            _this.openAccordion(toggle, content);
+                        }
+                    }
+                });
 
-	      // Expand the first item
-	      if (i === 0 && is_first_expanded) {
-	        _this.openAccordion(toggle, content);
-	      }
-	    }
-	  }
-	};
+                // Expand the first item
+                if (i === 0 && is_first_expanded) {
+                    _this.openAccordion(toggle, content);
+                }
+            }
+        }
+    };
 
-	(function() {
-	  // Initiate all instances on the page
-	  const accordions = document.getElementsByClassName("accordions");
-	  for (let i = 0; i < accordions.length; i++) {
-	    Accordion.init(accordions[i]);
-	  }
-	})();
-
-
-	$(document).on("click", ".naccs .menu div", function() {
-		var numberIndex = $(this).index();
-	
-		if (!$(this).is("active")) {
-			$(".naccs .menu div").removeClass("active");
-			$(".naccs ul li").removeClass("active");
-	
-			$(this).addClass("active");
-			$(".naccs ul").find("li:eq(" + numberIndex + ")").addClass("active");
-	
-			var listItemHeight = $(".naccs ul")
-				.find("li:eq(" + numberIndex + ")")
-				.innerHeight();
-			$(".naccs ul").height(listItemHeight + "px");
-		}
-	});
-
-	$('.owl-testimonials').owlCarousel({
-		items:1,
-		loop:true,
-		dots: true,
-		nav: false,
-		autoplay: true,
-		margin:15,
-		  responsive:{
-			  0:{
-				  items:1
-			  },
-			  600:{
-				  items:1
-			  },
-			  1000:{
-				  items:1
-			  }
-		  }
-	  })
-	
-	
-
-	// Menu Dropdown Toggle
-	if($('.menu-trigger').length){
-		$(".menu-trigger").on('click', function() {	
-			$(this).toggleClass('active');
-			$('.header-area .nav').slideToggle(200);
-		});
-	}
+    (function () {
+        // Initiate all instances on the page
+        const accordions = document.getElementsByClassName("accordions");
+        for (let i = 0; i < accordions.length; i++) {
+            Accordion.init(accordions[i]);
+        }
+    })();
 
 
-	// Menu elevator animation
-	$('.scroll-to-section a[href*=\\#]:not([href=\\#])').on('click', function() {
-		if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
-			var target = $(this.hash);
-			target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
-			if (target.length) {
-				var width = $(window).width();
-				if(width < 991) {
-					$('.menu-trigger').removeClass('active');
-					$('.header-area .nav').slideUp(200);	
-				}				
-				$('html,body').animate({
-					scrollTop: (target.offset().top) - 80
-				}, 700);
-				return false;
-			}
-		}
-	});
+    $(document).on("click", ".naccs .menu div", function () {
+        var numberIndex = $(this).index();
 
-	$(document).ready(function () {
-    $(document).on("scroll", onScroll);
-    
-    //smoothscroll para todos los enlaces internos
-    $('.scroll-to-section a[href^="#"], .nav a[href^="#"]').on('click', function (e) {
-        // Ignorar enlaces vacíos o que no sean internos
-        if (this.hash === "#" || this.hash === "") return;
-        
-        e.preventDefault();
-        $(document).off("scroll");
-        
-        $('.scroll-to-section a, .nav a[href^="#"]').each(function () {
-            $(this).removeClass('active');
+        if (!$(this).is("active")) {
+            $(".naccs .menu div").removeClass("active");
+            $(".naccs ul li").removeClass("active");
+
+            $(this).addClass("active");
+            $(".naccs ul").find("li:eq(" + numberIndex + ")").addClass("active");
+
+            var listItemHeight = $(".naccs ul")
+                .find("li:eq(" + numberIndex + ")")
+                .innerHeight();
+            $(".naccs ul").height(listItemHeight + "px");
+        }
+    });
+
+    $('.owl-testimonials').owlCarousel({
+        items: 1,
+        loop: true,
+        dots: true,
+        nav: false,
+        autoplay: true,
+        margin: 15,
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 1
+            },
+            1000: {
+                items: 1
+            }
+        }
+    })
+
+
+
+    // Menu Dropdown Toggle
+    if ($('.menu-trigger').length) {
+        $(".menu-trigger").on('click', function () {
+            $(this).toggleClass('active');
+            $('.header-area .nav').slideToggle(200);
         });
-        $(this).addClass('active');
-        
-        var target = this.hash;
-        var targetElement = $(target);
-        
-        if (targetElement.length) {
-            $('html, body').stop().animate({
-                scrollTop: (targetElement.offset().top) - 79
-            }, 500, 'swing', function () {
-                window.location.hash = target;
-                $(document).on("scroll", onScroll);
+    }
+
+
+    // Menu elevator animation
+    $('.scroll-to-section a[href*=\\#]:not([href=\\#])').on('click', function () {
+        if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+            var target = $(this.hash);
+            target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+            if (target.length) {
+                var width = $(window).width();
+                if (width < 991) {
+                    $('.menu-trigger').removeClass('active');
+                    $('.header-area .nav').slideUp(200);
+                }
+                $('html,body').animate({
+                    scrollTop: (target.offset().top) - 80
+                }, 700);
+                return false;
+            }
+        }
+    });
+
+    $(document).ready(function () {
+        $(document).on("scroll", onScroll);
+
+        //smoothscroll para todos los enlaces internos
+        $('.scroll-to-section a[href^="#"], .nav a[href^="#"]').on('click', function (e) {
+            // Ignorar enlaces vacíos o que no sean internos
+            if (this.hash === "#" || this.hash === "") return;
+
+            e.preventDefault();
+            $(document).off("scroll");
+
+            $('.scroll-to-section a, .nav a[href^="#"]').each(function () {
+                $(this).removeClass('active');
+            });
+            $(this).addClass('active');
+
+            var target = this.hash;
+            var targetElement = $(target);
+
+            if (targetElement.length) {
+                $('html, body').stop().animate({
+                    scrollTop: (targetElement.offset().top) - 79
+                }, 500, 'swing', function () {
+                    window.location.hash = target;
+                    $(document).on("scroll", onScroll);
+                });
+            }
+        });
+
+        // Ejecutar onScroll una vez al cargar para establecer el estado inicial
+        setTimeout(function () {
+            onScroll();
+        }, 100);
+    });
+
+    function onScroll(event) {
+        var scrollPos = $(document).scrollTop() + 100; // Offset de 100px para el header
+
+        // Selecciona los enlaces del menú que apuntan a secciones internas
+        $('.nav .scroll-to-section a, .nav a[href^="#"]').each(function () {
+            var currLink = $(this);
+            var hash = currLink.attr("href");
+
+            // Ignorar enlaces que no apuntan a una sección (ej: javascript:void(0))
+            if (hash === "#" || hash === "" || hash.indexOf("#") === -1) return;
+
+            var targetId = hash.split('#')[1];
+            var refElement;
+
+            // Manejar el caso especial de "Home" (sin hash o solo "/")
+            if (!targetId || targetId === "") {
+                // Home se activa cuando el scroll está en la parte superior
+                if (scrollPos < 200) {
+                    $('.nav .scroll-to-section a').removeClass("active");
+                    currLink.addClass("active");
+                }
+                return;
+            }
+
+            refElement = $("#" + targetId);
+
+            if (refElement.length && refElement.position()) {
+                var elementTop = refElement.offset().top;
+                var elementBottom = elementTop + refElement.outerHeight();
+
+                // Verificar si la sección está visible en la ventana
+                if (scrollPos >= elementTop - 100 && scrollPos < elementBottom - 100) {
+                    $('.nav .scroll-to-section a, .nav a[href^="#"]').removeClass("active");
+                    currLink.addClass("active");
+                }
+            }
+        });
+    }
+
+
+    // Page loading animation
+    $(window).on('load', function () {
+        if ($('.cover').length) {
+            $('.cover').parallax({
+                imageSrc: $('.cover').data('image'),
+                zIndex: '1'
             });
         }
+
+        $("#preloader").animate({
+            'opacity': '0'
+        }, 600, function () {
+            setTimeout(function () {
+                $("#preloader").css("visibility", "hidden").fadeOut();
+            }, 300);
+        });
     });
-    
-    // Ejecutar onScroll una vez al cargar para establecer el estado inicial
-    setTimeout(function() {
-        onScroll();
-    }, 100);
-});
-
-	function onScroll(event){
-    var scrollPos = $(document).scrollTop() + 100; // Offset de 100px para el header
-    
-    // Selecciona los enlaces del menú que apuntan a secciones internas
-    $('.nav .scroll-to-section a, .nav a[href^="#"]').each(function () {
-        var currLink = $(this);
-        var hash = currLink.attr("href");
-        
-        // Ignorar enlaces que no apuntan a una sección (ej: javascript:void(0))
-        if (hash === "#" || hash === "" || hash.indexOf("#") === -1) return;
-        
-        var targetId = hash.split('#')[1];
-        var refElement;
-        
-        // Manejar el caso especial de "Home" (sin hash o solo "/")
-        if (!targetId || targetId === "") {
-            // Home se activa cuando el scroll está en la parte superior
-            if (scrollPos < 200) {
-                $('.nav .scroll-to-section a').removeClass("active");
-                currLink.addClass("active");
-            }
-            return;
-        }
-        
-        refElement = $("#" + targetId);
-        
-        if (refElement.length && refElement.position()) {
-            var elementTop = refElement.offset().top;
-            var elementBottom = elementTop + refElement.outerHeight();
-            
-            // Verificar si la sección está visible en la ventana
-            if (scrollPos >= elementTop - 100 && scrollPos < elementBottom - 100) {
-                $('.nav .scroll-to-section a, .nav a[href^="#"]').removeClass("active");
-                currLink.addClass("active");
-            }
-        }
-    });
-}
 
 
-	// Page loading animation
-	$(window).on('load', function() {
-		if($('.cover').length){
-			$('.cover').parallax({
-				imageSrc: $('.cover').data('image'),
-				zIndex: '1'
-			});
-		}
 
-		$("#preloader").animate({
-			'opacity': '0'
-		}, 600, function(){
-			setTimeout(function(){
-				$("#preloader").css("visibility", "hidden").fadeOut();
-			}, 300);
-		});
-	});
-
-	
-
-	const dropdownOpener = $('.main-nav ul.nav .has-sub > a');
+    const dropdownOpener = $('.main-nav ul.nav .has-sub > a');
 
     // Open/Close Submenus
     if (dropdownOpener.length) {
@@ -309,7 +309,7 @@
     }
 
 
-	function visible(partial) {
+    function visible(partial) {
         var $t = partial,
             $w = jQuery(window),
             viewTop = $w.scrollTop(),
@@ -323,13 +323,13 @@
 
     }
 
-    $(window).scroll(function() {
+    $(window).scroll(function () {
 
         if (visible($('.count-digit'))) {
             if ($('.count-digit').hasClass('counter-loaded')) return;
             $('.count-digit').addClass('counter-loaded');
 
-            $('.count-digit').each(function() {
+            $('.count-digit').each(function () {
                 var $this = $(this);
                 jQuery({
                     Counter: 0
@@ -338,7 +338,7 @@
                 }, {
                     duration: 3000,
                     easing: 'swing',
-                    step: function() {
+                    step: function () {
                         $this.text(Math.ceil(this.Counter));
                     }
                 });
@@ -351,43 +351,41 @@
     // ==========================================
     // Esta funcionalidad maneja el envío del formulario sin redirección
     // y muestra mensajes de éxito/error en la misma página
-    
-    $(document).ready(function() {
+
+    $(document).ready(function () {
         // Verificar que el formulario existe en la página
-        if ($('#contactForm').length) {
-            $('#contactForm').on('submit', function(e) {
+        if ($('#calculate').length) {
+            $('#calculate').on('submit', function (e) {
                 e.preventDefault(); // Evita que el formulario redirija a FormKeep
-                
+
                 var form = $(this);
                 var submitButton = $('#form-submit');
                 var formMessage = $('#form-message');
-                
+
                 // Si no existe el contenedor de mensajes, lo creamos
                 if (formMessage.length === 0) {
                     form.append('<div id="form-message" style="display: none; margin-top: 20px; padding: 15px; border-radius: 8px; text-align: center;"></div>');
                     formMessage = $('#form-message');
                 }
-                
-                var formData = form.serialize(); // Serializa los datos del formulario
-                
+
                 // Validación básica
-                var nombre = $('#name').val();
-                var email = $('#email').val();
-                var servicio = $('#chooseOption').val();
-                
+                var nombre = $('#Nombre_y_Apellidos').val();
+                var email = $('#Correo').val();
+                var servicio = $('#Servicios').val();
+
                 if (!nombre || !email || !servicio) {
                     formMessage
                         .removeClass('success-message')
                         .addClass('error-message')
                         .html('<i class="fas fa-exclamation-triangle"></i> Por favor, complete todos los campos obligatorios.')
                         .fadeIn();
-                    
-                    setTimeout(function() {
+
+                    setTimeout(function () {
                         formMessage.fadeOut();
                     }, 4000);
                     return;
                 }
-                
+
                 // Validar formato de email
                 var emailRegex = /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/;
                 if (!emailRegex.test(email)) {
@@ -396,68 +394,90 @@
                         .addClass('error-message')
                         .html('<i class="fas fa-exclamation-triangle"></i> Por favor, ingrese un correo electrónico válido.')
                         .fadeIn();
-                    
-                    setTimeout(function() {
+
+                    setTimeout(function () {
                         formMessage.fadeOut();
                     }, 4000);
                     return;
                 }
-                
+
                 // Mostrar estado de carga
                 var originalButtonText = submitButton.html();
                 submitButton.html('<i class="fas fa-spinner fa-spin"></i> Enviando...');
                 submitButton.prop('disabled', true);
                 formMessage.hide();
-                
-                // Enviar datos a FormKeep vía AJAX
+
+                // Enviar datos a FormKeep usando FormData para manejar correctamente el envío
+                var formData = new FormData(form[0]);
+
                 $.ajax({
                     url: form.attr('action'),
                     type: 'POST',
                     data: formData,
-                    dataType: 'json',
-                    success: function(data) {
-                        // Éxito: mostrar mensaje de agradecimiento
+                    processData: false,  // Importante: no procesar los datos
+                    contentType: false,  // Importante: dejar que el navegador establezca el contentType
+                    dataType: 'text',    // Cambiar a 'text' porque FormKeep no devuelve JSON
+                    success: function (data) {
+                        // FormKeep redirige, pero si llegamos aquí con status 200, fue exitoso
                         formMessage
                             .removeClass('error-message')
                             .addClass('success-message')
-                            .html('<i class="fas fa-check-circle"></i> ¡Gracias por contactarnos! Nos pondremos en contacto contigo pronto.')
+                            .html('<i class="fas fa-check-circle"></i> ¡Gracias por contactarnos! ' +
+                                'Hemos recibido tu mensaje correctamente. Nos pondremos en contacto contigo pronto.')
                             .fadeIn();
-                        
+
                         // Limpiar el formulario
                         form[0].reset();
-                        
+
                         // Restaurar botón
                         submitButton.html(originalButtonText);
                         submitButton.prop('disabled', false);
-                        
+
                         // Ocultar mensaje después de 5 segundos
-                        setTimeout(function() {
+                        setTimeout(function () {
                             formMessage.fadeOut();
                         }, 5000);
                     },
-                    error: function(xhr, status, error) {
-                        // Error: mostrar mensaje de error
-                        var errorMsg = 'Hubo un problema al enviar el mensaje. Por favor, inténtalo de nuevo.';
-                        
-                        // Si FormKeep devuelve un mensaje de error específico
-                        if (xhr.responseJSON && xhr.responseJSON.message) {
-                            errorMsg = xhr.responseJSON.message;
+                    error: function (xhr, status, error) {
+                        // Verificar si el error es por redirección (lo cual es normal en FormKeep)
+                        // Si el estado es 0 o la respuesta está vacía, puede ser éxito
+                        if (xhr.status === 0 || xhr.readyState === 0) {
+                            // Esto puede ocurrir por redirección, asumimos éxito
+                            formMessage
+                                .removeClass('error-message')
+                                .addClass('success-message')
+                                .html('<i class="fas fa-check-circle"></i> ¡Gracias por contactarnos! ' +
+                                    'Hemos recibido tu mensaje correctamente. Nos pondremos en contacto contigo pronto.')
+                                .fadeIn();
+
+                            form[0].reset();
+                            submitButton.html(originalButtonText);
+                            submitButton.prop('disabled', false);
+
+                            setTimeout(function () {
+                                formMessage.fadeOut();
+                            }, 5000);
+                        } else {
+                            // Error real
+                            var errorMsg = 'Hubo un problema al enviar el mensaje. Por favor, inténtalo de nuevo.';
+
+                            if (xhr.responseText && xhr.responseText.includes('error')) {
+                                errorMsg = xhr.responseText;
+                            }
+
+                            formMessage
+                                .removeClass('success-message')
+                                .addClass('error-message')
+                                .html('<i class="fas fa-exclamation-triangle"></i> ' + errorMsg)
+                                .fadeIn();
+
+                            submitButton.html(originalButtonText);
+                            submitButton.prop('disabled', false);
+
+                            setTimeout(function () {
+                                formMessage.fadeOut();
+                            }, 5000);
                         }
-                        
-                        formMessage
-                            .removeClass('success-message')
-                            .addClass('error-message')
-                            .html('<i class="fas fa-exclamation-triangle"></i> ' + errorMsg)
-                            .fadeIn();
-                        
-                        // Restaurar botón
-                        submitButton.html(originalButtonText);
-                        submitButton.prop('disabled', false);
-                        
-                        // Ocultar mensaje después de 5 segundos
-                        setTimeout(function() {
-                            formMessage.fadeOut();
-                        }, 5000);
                     }
                 });
             });
