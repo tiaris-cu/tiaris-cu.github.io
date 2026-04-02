@@ -1940,3 +1940,207 @@ responsive adicionales
     border-color: #1a4d8c;
     box-shadow: 0 0 5px rgba(26, 77, 140, 0.3);
 }
+
+/* ==========================================
+   MEJORAS PROFESIONALES PARA FORMULARIO CON IMAGEN
+   ========================================== */
+
+/* Contenedor principal del formulario */
+section.calculator {
+    margin-top: 150px;
+    background-image: url(../images/calculator-bg.jpg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    width: 100%;
+    padding: 80px 0px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Fila para alinear imagen y formulario */
+section.calculator .row {
+    display: flex;
+    align-items: stretch; /* Hace que ambas columnas tengan la misma altura */
+}
+
+/* Contenedor de la imagen - SIN márgenes negativos */
+section.calculator .left-image {
+    height: 100%;
+    display: flex;
+    align-items: flex-end; /* La imagen se alinea al fondo de la columna */
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* La imagen de la mujer - se extiende hasta el fondo */
+section.calculator .left-image img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    object-position: bottom;
+    display: block;
+    margin: 0;
+    /* La imagen tocará el fondo de su contenedor */
+}
+
+/* Columna del formulario - misma altura que la imagen */
+section.calculator .col-lg-5 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Contenedor del formulario */
+#calculate {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Ajustes para el mensaje del formulario */
+#form-message {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 14px;
+    border-radius: 8px;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Estilos responsivos */
+@media (min-width: 992px) {
+    /* En desktop: imagen y formulario alineados al fondo */
+    section.calculator .left-image {
+        position: relative;
+        bottom: -80px; /* Ajusta este valor para que la imagen toque el borde */
+        margin-bottom: -80px; /* Compensa el desplazamiento */
+    }
+    
+    section.calculator .left-image img {
+        max-height: calc(100% + 30px); /* Compensa el desplazamiento */
+        width: auto;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 991px) {
+    /* En tablets y móviles: imagen arriba, formulario abajo */
+    section.calculator .row {
+        flex-direction: column;
+    }
+    
+    section.calculator .left-image {
+        margin-bottom: 30px;
+        text-align: center;
+        align-items: center;
+    }
+    
+    section.calculator .left-image img {
+        max-width: 70%;
+        height: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    section.calculator {
+        padding: 50px 0;
+    }
+    
+    section.calculator .left-image img {
+        max-width: 85%;
+    }
+}
+
+/* Mejora para los campos del formulario */
+#calculate input,
+#calculate select,
+#calculate textarea {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.95);
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 12px 15px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    margin-bottom: 15px;
+}
+
+#calculate input:focus,
+#calculate select:focus,
+#calculate textarea:focus {
+    border-color: #1a4d8c;
+    box-shadow: 0 0 5px rgba(26, 77, 140, 0.3);
+    outline: none;
+}
+
+#calculate textarea {
+    min-height: 100px;
+    resize: vertical;
+    font-family: inherit;
+}
+
+/* Botón del formulario */
+#form-submit {
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 5px;
+}
+
+#form-submit:active {
+    transform: scale(0.98);
+}
+
+/* Mensajes de éxito y error */
+.success-message {
+    background: linear-gradient(135deg, #d4edda, #c3e6cb);
+    color: #155724;
+    border-left: 4px solid #28a745;
+}
+
+.error-message {
+    background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+    color: #721c24;
+    border-left: 4px solid #dc3545;
+}
+
+.success-message i,
+.error-message i {
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+/* Ajuste del recaptcha */
+.g-recaptcha {
+    transform: scale(0.95);
+    transform-origin: left center;
+    margin-bottom: 15px;
+}
+
+@media (max-width: 768px) {
+    .g-recaptcha {
+        transform: scale(0.85);
+    }
+}
+
+/* Efecto de sombra para dar profundidad */
+section.calculator .left-image img {
+    filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.15));
+    transition: all 0.3s ease;
+}
+
+section.calculator .left-image img:hover {
+    filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.2));
+}
