@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  jekyll:
+    build: .
+    container_name: tiaris-web
+    ports:
+      - "80:4000"  # Expone en puerto 80 del host
+    restart: unless-stopped
+    volumes:
+      - ./:/srv/jekyll  # Para desarrollo, opcional
