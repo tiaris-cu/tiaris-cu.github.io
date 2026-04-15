@@ -14,8 +14,9 @@
 
 # Dockerfile
 # Usa la imagen oficial de Jekyll
-FROM jekyll/jekyll:4.3.3
+FROM jekyll/jekyll:latest
 
+# Establece el directorio de trabajo
 WORKDIR /srv/jekyll
 
 # Copiar archivos de dependencias primero (mejor aprovechamiento de caché)
