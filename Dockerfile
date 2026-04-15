@@ -26,11 +26,11 @@ COPY Gemfile Gemfile.lock ./
 USER root
 COPY --chown=jekyll:jekyll . .
 
-# Vuelve al usuario jekyll
-#USER jekyll
-
 # Instala bundler si es necesario
 RUN gem install bundler
+
+# Vuelve al usuario jekyll
+USER jekyll
 
 # Instala las dependencias del Gemfile
 RUN bundle install
