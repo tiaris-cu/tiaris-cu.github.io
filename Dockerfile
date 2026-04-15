@@ -16,22 +16,30 @@
 # Usa la imagen oficial de Jekyll
 FROM jekyll/jekyll:latest
 
+# Establece el directorio de trabajo
 WORKDIR /srv/jekyll
 
 # Copiar archivos de dependencias primero (mejor aprovechamiento de caché)
 COPY Gemfile Gemfile.lock ./
 
-# Configurar Bundler para instalar gems LOCALMENTE en vendor/bundle
-RUN bundle config set --local path 'vendor/bundle' && \
-    bundle install
-
-# Copiar el resto del código fuente
+# Copia los archivos del sitio
+USER root
 COPY --chown=jekyll:jekyll . .
 
-# Construir el sitio
-RUN bundle exec jekyll build
+# Vuelve al usuario jekyll
+#USER jekyll
 
+# Instala bundler si es necesario
+RUN gem install bundler
+
+# Instala las dependencias del Gemfile
+RUN bundle install
+
+# Construye el sitio estático
+RUN jekyll build
+
+# Expone el puerto 4000 (default de Jekyll)
 EXPOSE 4000
 
-# Servir el sitio usando bundle exec
-CMD ["bundle", "exec", "jekyll", "serve", "--host", "0.0.0.0", "--port", "4000"]
+# Comando para servir el sitio
+CMD ["jekyll", "serve", "--host", "0.0.0.0", "--port", "4000"]
