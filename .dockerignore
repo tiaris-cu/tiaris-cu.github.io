@@ -1,0 +1,11 @@
+.git/
+.gitignore
+.vscode/
+.sass-cache/
+.jekyll-cache/
+_site/
+vendor/
+bundle/
+*.log
+.DS_Store
+Gemfile.lock

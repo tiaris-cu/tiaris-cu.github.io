@@ -19,12 +19,17 @@ FROM jekyll/jekyll:4.2.2
 # Establece el directorio de trabajo
 WORKDIR /srv/jekyll
 
-# Copiar archivos de dependencias primero (mejor aprovechamiento de caché)
-COPY Gemfile Gemfile.lock ./
+# Copiar dependencias primero (mejor aprovechamiento de caché)
+COPY Gemfile ./
+
+# Dar permisos de escritura
+USER root
+RUN chown -R jekyll:jekyll /srv/jekyll
+USER jekyll
 
 # Configurar Bundler para instalar gems LOCALMENTE en vendor/bundle
 RUN bundle config set --local path 'vendor/bundle' && \
-    bundle install
+    bundle install --jobs 4
 
 # Copiar el resto del código fuente
 COPY --chown=jekyll:jekyll . .
