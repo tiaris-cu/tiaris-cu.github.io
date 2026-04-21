@@ -12,30 +12,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Dockerfile
+# Dockerfile (versión simplificada que ha funcionado para otros)
 FROM jekyll/jekyll:4.2.2
 
 WORKDIR /srv/jekyll
 
-COPY Gemfile ./
+COPY Gemfile* ./
 
 USER root
 RUN chown -R jekyll:jekyll /srv/jekyll
 USER jekyll
 
-# Configurar Bundler
-RUN bundle config set --local path 'vendor/bundle' && \
-    bundle config set --local disable_shared_gems true && \
-    bundle install --jobs 4
+# Instalar gems localmente
+RUN bundle install --path vendor/bundle
 
 COPY --chown=jekyll:jekyll . .
 
-# CRÍTICO: Especificar explícitamente el Gemfile
-ENV BUNDLE_GEMFILE=/srv/jekyll/Gemfile
-
-# Ahora sí debería funcionar
-RUN bundle exec jekyll build
+# Usar bundle exec con path explícito
+RUN bundle exec --path vendor/bundle jekyll build
 
 EXPOSE 4000
 
-CMD ["bundle", "exec", "jekyll", "serve", "--host", "0.0.0.0", "--port", "4000"]
+CMD ["bundle", "exec", "--path", "vendor/bundle", "jekyll", "serve", "--host", "0.0.0.0", "--port", "4000"]
