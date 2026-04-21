@@ -34,8 +34,14 @@ RUN bundle config set --local path 'vendor/bundle' && \
 # Copiar el resto del código fuente
 COPY --chown=jekyll:jekyll . .
 
+# Limpiar el entorno y forzar el uso de las gems locales
+RUN bundle clean --force && \
+    bundle config set --local path 'vendor/bundle' && \
+    bundle install && \
+    bundle exec jekyll build
+
 # Construir el sitio
-RUN bundle exec jekyll build
+# RUN bundle exec jekyll build
 
 EXPOSE 4000
 
