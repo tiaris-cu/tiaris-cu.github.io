@@ -14,7 +14,7 @@
 
 # Dockerfile
 # Usa la imagen oficial de Jekyll
-FROM jekyll/jekyll:latest
+FROM jekyll/jekyll:4.2.2
 
 # Establece el directorio de trabajo
 WORKDIR /srv/jekyll
