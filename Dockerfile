@@ -13,7 +13,6 @@
 # limitations under the License.
 
 # Dockerfile
-# Dockerfile
 FROM jekyll/jekyll:4.2.2
 
 WORKDIR /srv/jekyll
@@ -24,13 +23,14 @@ USER root
 RUN chown -R jekyll:jekyll /srv/jekyll
 USER jekyll
 
-# Instalar gems globalmente (sin vendor/bundle)
-RUN bundle install --jobs 4
+# Instalar gems en vendor/bundle
+RUN bundle install --path vendor/bundle --jobs 4
 
 COPY --chown=jekyll:jekyll . .
 
-RUN bundle exec jekyll build
+# Usar el path explícitamente
+RUN bundle exec --path vendor/bundle jekyll build
 
 EXPOSE 4000
 
-CMD ["bundle", "exec", "jekyll", "serve", "--host", "0.0.0.0", "--port", "4000"]
+CMD ["bundle", "exec", "--path", "vendor/bundle", "jekyll", "serve", "--host", "0.0.0.0", "--port", "4000"]
