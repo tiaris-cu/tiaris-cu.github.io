@@ -23,16 +23,18 @@ USER root
 RUN chown -R jekyll:jekyll /srv/jekyll
 USER jekyll
 
-# Configurar Bundler y verificar configuración
+# Configurar Bundler
 RUN bundle config set --local path 'vendor/bundle' && \
     bundle config set --local disable_shared_gems true && \
     bundle install --jobs 4
 
 COPY --chown=jekyll:jekyll . .
 
-# Forzar el uso del path configurado
-RUN bundle config && \
-    bundle exec jekyll build
+# CRÍTICO: Especificar explícitamente el Gemfile
+ENV BUNDLE_GEMFILE=/srv/jekyll/Gemfile
+
+# Ahora sí debería funcionar
+RUN bundle exec jekyll build
 
 EXPOSE 4000
 
