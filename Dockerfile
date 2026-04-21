@@ -29,7 +29,8 @@ RUN bundle install --path vendor/bundle
 COPY --chown=jekyll:jekyll . .
 
 # Usar bundle exec con path explícito
-RUN bundle exec --path vendor/bundle jekyll build
+#RUN bundle exec --path vendor/bundle jekyll build
+RUN bundle exec jekyll build
 
 EXPOSE 4000
 
