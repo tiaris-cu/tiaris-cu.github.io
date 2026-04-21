@@ -23,14 +23,17 @@ USER root
 RUN chown -R jekyll:jekyll /srv/jekyll
 USER jekyll
 
-# Instalar gems en vendor/bundle
-RUN bundle install --path vendor/bundle --jobs 4
+# Configurar Bundler y verificar configuración
+RUN bundle config set --local path 'vendor/bundle' && \
+    bundle config set --local disable_shared_gems true && \
+    bundle install --jobs 4
 
 COPY --chown=jekyll:jekyll . .
 
-# Usar el path explícitamente
-RUN bundle exec --path vendor/bundle jekyll build
+# Forzar el uso del path configurado
+RUN bundle config && \
+    bundle exec jekyll build
 
 EXPOSE 4000
 
-CMD ["bundle", "exec", "--path", "vendor/bundle", "jekyll", "serve", "--host", "0.0.0.0", "--port", "4000"]
+CMD ["bundle", "exec", "jekyll", "serve", "--host", "0.0.0.0", "--port", "4000"]
