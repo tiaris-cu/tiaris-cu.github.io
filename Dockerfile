@@ -13,37 +13,24 @@
 # limitations under the License.
 
 # Dockerfile
-# Usa la imagen oficial de Jekyll
+# Dockerfile
 FROM jekyll/jekyll:4.2.2
 
-# Establece el directorio de trabajo
 WORKDIR /srv/jekyll
 
-# Copiar dependencias primero (mejor aprovechamiento de caché)
 COPY Gemfile ./
 
-# Dar permisos de escritura
 USER root
 RUN chown -R jekyll:jekyll /srv/jekyll
 USER jekyll
 
-# Configurar Bundler para instalar gems LOCALMENTE en vendor/bundle
-RUN bundle config set --local path 'vendor/bundle' && \
-    bundle install --jobs 4
+# Instalar gems globalmente (sin vendor/bundle)
+RUN bundle install --jobs 4
 
-# Copiar el resto del código fuente
 COPY --chown=jekyll:jekyll . .
 
-# Limpiar el entorno y forzar el uso de las gems locales
-#RUN bundle clean --force && \
-#    bundle config set --local path 'vendor/bundle' && \
-#    bundle install && \
-#    bundle exec jekyll build
-
-# Construir el sitio
 RUN bundle exec jekyll build
 
 EXPOSE 4000
 
-# Servir el sitio usando bundle exec
 CMD ["bundle", "exec", "jekyll", "serve", "--host", "0.0.0.0", "--port", "4000"]
