@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Como solucionar error docker CLI plugin buildx not found al intentar ddev start"
-date: 2026-03-30
+date: 2026-04-20
 author: "Tiaris Team"
 categories: [Docker, DDEV]
 tags: [Docker, DDEV, docker-buildx]
